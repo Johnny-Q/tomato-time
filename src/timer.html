@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-    <div class="timer">
-        <h1 id="minutes"></h1>
-        <h1 id ="seconds"></h1>
+    <div class="main">
+        <input name="minutes" type="text" placeholder="00">
+        <input name="seconds" type="text" placeholder="00">
     </div>
-    
+    <div class = "break">
+        <input name="minutes" type="text" placeholder="00">
+        <input name="seconds" type="text" placeholder="00">
+    </div>
+    <div class = "long">
+        <input name="minutes" type="text" placeholder="00">
+        <input name="seconds" type="text" placeholder="00">
+    </div>
     <button onclick="startTimer()">start</button>
     <button onclick="pauseTimer()">pause</button>
     <script src = "timer.js"></script>
