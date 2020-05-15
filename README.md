@@ -5,10 +5,12 @@ using electron because idky, could use react, might use react
 
 features I hope to implement:
 
-- Customizable Timer
+- [x] Customizable Timer
 
-- Check-ins after every small session
+- [x] Check-ins after every small session
 
-- Todo list for tasks
+- [ ] Todo list for tasks
 
-- Calendar Scheduler
+- [ ] Calendar Scheduler
+
+- [ ]Make a better ui

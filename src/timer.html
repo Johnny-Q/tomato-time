@@ -8,19 +8,23 @@
 </head>
 <body>
     <div class="main">
-        <input name="minutes" type="text" placeholder="00">
+        <input name="minutes" type="text" placeholder="00" pattern="[0-9]*">
+        <span>:</span>
         <input name="seconds" type="text" placeholder="00">
     </div>
     <div class = "break">
         <input name="minutes" type="text" placeholder="00">
+        <span>:</span>
         <input name="seconds" type="text" placeholder="00">
     </div>
     <div class = "long">
         <input name="minutes" type="text" placeholder="00">
+        <span>:</span>
         <input name="seconds" type="text" placeholder="00">
     </div>
+
     <button onclick="startTimer()">start</button>
-    <button onclick="pauseTimer()">pause</button>
+    <audio src="beep.mp3"></audio>
     <script src = "timer.js"></script>
 </body>
 </html>

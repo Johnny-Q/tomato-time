@@ -1,3 +1,4 @@
+const {ipcRenderer} = require('electron');
 var params = {
     "wm": 0,
     "ws": 0,
@@ -13,6 +14,7 @@ var getID = document.getElementById;
 
 var inMin = document.getElementsByName("minutes");
 var inSec = document.getElementsByName("seconds");
+var audio = document.getElementsByTagName("audio")[0];
 
 var inputs = document.getElementsByTagName("input");
 
@@ -29,20 +31,30 @@ for (var i = 0; i < inputs.length; i++) {
     inputs[i].setAttribute("tabindex", i);
 }
 
+var prev0Element;
 document.body.onkeyup = function (e) {
     var element = e.srcElement || e.target;
     var max = parseInt(element.getAttribute("maxlength"), 10);
     var currLength = element.value.length;
+
+    //validate the keyinput
+    element.value = element.value.match(/[\d]*/);
+
+    
     if (currLength >= max) {
         var next = parseInt(element.getAttribute("tabindex"), 10) + 1;
         if (next < inputs.length) {
             inputs[next].focus();
         }
+        prev0Element = null;
     } else if (currLength == 0) {
-        var prev = parseInt(element.getAttribute("tabindex"), 10) - 1;
-        if (prev > -1) {
-            inputs[prev].focus();
+        if (prev0Element && prev0Element === element) {
+            var prev = parseInt(element.getAttribute("tabindex"), 10) - 1;
+            if (prev > -1) {
+                inputs[prev].focus();
+            }
         }
+        prev0Element = element;
     }
 }
 
@@ -64,33 +76,19 @@ function startTimer() {
             curSecs = 59;
         }
 
-
-        var msg = curMins;
-        if (curMins < 10) {
-            msg = "0" + curMins.toString();
-        }
-        inMin[type].value = msg;
-        msg = curSecs;
-        if (curSecs < 10) {
-            msg = "0" + curSecs.toString();
-        }
-        inSec[type].value = msg;
-
+        //prefix a 0 if there
+        inMin[type].value = prefixIfNeeded(curMins);
+        inSec[type].value = prefixIfNeeded(curSecs);
+        
         if (curMins < 0) {
             switch (type) {
                 case 0:
+                    ipcRenderer.send("done-work", "reee");
+                    //reset the timer
                     curMins = params.wm;
                     curSecs = params.ws;
-                    var msg = curMins;
-                    if (curMins < 10) {
-                        msg = "0" + curMins.toString();
-                    }
-                    inMin[type].value = msg;
-                    msg = curSecs;
-                    if (curSecs < 10) {
-                        msg = "0" + curSecs.toString();
-                    }
-                    inSec[type].value = msg;
+                    inMin[type].value = prefixIfNeeded(curMins);
+                    inSec[type].value = prefixIfNeeded(curSecs);
 
                     if (rounds >= maxRounds) {
                         curSecs = params.ls;
@@ -104,18 +102,12 @@ function startTimer() {
                     rounds++;
                     break;
                 case 1:
+                    //reset the timer
                     curMins = params.bm;
                     curSecs = params.bs;
-                    var msg = curMins;
-                    if (curMins < 10) {
-                        msg = "0" + curMins.toString();
-                    }
-                    inMin[type].value = msg;
-                    msg = curSecs;
-                    if (curSecs < 10) {
-                        msg = "0" + curSecs.toString();
-                    }
-                    inSec[type].value = msg;
+                    inMin[type].value = prefixIfNeeded(curMins);
+                    inSec[type].value = prefixIfNeeded(curSecs);
+
                     curSecs = params.ws;
                     curMins = params.wm;
                     type = 0;
@@ -123,23 +115,17 @@ function startTimer() {
                 case 2:
                     curMins = params.lm;
                     curSecs = params.ls;
-                    var msg = curMins;
-                    if (curMins < 10) {
-                        msg = "0" + curMins.toString();
-                    }
-                    inMin[type].value = msg;
-                    msg = curSecs;
-                    if (curSecs < 10) {
-                        msg = "0" + curSecs.toString();
-                    }
-                    inSec[type].value = msg;
+                    inMin[type].value = prefixIfNeeded(curMins);
+                    inSec[type].value = prefixIfNeeded(curSecs);
+
                     curSecs = params.ws;
                     curMins = params.wm;
                     type = 0;
                     rounds = 0;
                     break;
-
             }
+            audio.currentTime = 0;
+            audio.play();
         }
 
         //update text
@@ -148,3 +134,15 @@ function startTimer() {
 function pauseTimer() {
     clearInterval(timerFunc);
 }
+
+
+function prefixIfNeeded(val){
+    var msg = "";
+    if(val < 10){
+        msg += "0";
+    }
+    msg += val.toString();
+    return msg;
+}
+
+class Timer{}
