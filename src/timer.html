@@ -1,30 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Tera&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
-<body>
-    <div class="main">
-        <input name="minutes" type="text" placeholder="00" pattern="[0-9]*">
-        <span>:</span>
-        <input name="seconds" type="text" placeholder="00">
-    </div>
-    <div class = "break">
-        <input name="minutes" type="text" placeholder="00">
-        <span>:</span>
-        <input name="seconds" type="text" placeholder="00">
-    </div>
-    <div class = "long">
-        <input name="minutes" type="text" placeholder="00">
-        <span>:</span>
-        <input name="seconds" type="text" placeholder="00">
-    </div>
 
-    <button onclick="startTimer()">start</button>
-    <audio src="beep.mp3"></audio>
-    <script src = "timer.js"></script>
+<body>
+    <div class="modal">
+        <div class="modal-content hori-center">
+            <h1>rate your session</h1>
+            <div class="m-top">
+                <button class = "star">1</button>
+                <button class = "star">2</button>
+                <button class = "star">3</button>
+                <button class = "star">4</button>
+                <button class = "star">5</button>
+            </div>
+            <textarea class = "m-top" name="" id="" cols="30" rows="10" placeholder="What did you do?"></textarea>
+            <button class = "hori-center" style="display:block">submit</button>
+        </div>
+    </div>
+    <div class="white">
+        <div class="vert-center">
+            <h1>reee</h1>
+            <input class="time" name="min" type="text" placeholder="00" onkeypress="return isValid(event)"
+                maxlength="2">
+            <h1>UP NEXT</h1>
+        </div>
+        <div class="buttons"></div>
+    </div>
+    <div class="black">
+        <div class="vert-center">
+            <h1>TIME</h1>
+            <input class="time" name="sec" type="text" placeholder="00" onkeypress="return isValid(event)"
+                maxlength="2">
+            <h1>reee</h1>
+        </div>
+    </div>
+    
+    <audio src="audio/timerDone.mp3"></audio>
+    <script src="timer.js"></script>
 </body>
+
 </html>

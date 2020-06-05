@@ -5,7 +5,7 @@ using electron because idky, could use react, might use react
 
 features I hope to implement:
 
-- [x] Customizable Timer
+- [ ] Customizable Timer
 
 - [x] Check-ins after every small session
 
@@ -13,4 +13,7 @@ features I hope to implement:
 
 - [ ] Calendar Scheduler
 
-- [ ]Make a better ui
+- [x] Make a better ui
+
+
+https://3dtransforms.desandro.com/perspective
