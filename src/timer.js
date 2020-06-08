@@ -84,10 +84,15 @@ var isWorking = true;
 work.startTimer();
 
 function switchTimers(){
+    //open model after work sess completed
+    if(currentTimer == 0){
+        modal.style.display = "block";
+    }
+
     //change the text
     
     //play the audio
-    //audio.play();
+    audio.play();
 
     //start the next timer
     if(roundCount == breakRounds){
