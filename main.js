@@ -13,7 +13,7 @@ app.on("ready", function(){
         height: 900
     });
 
-    Menu.setApplicationMenu(null);
+    //Menu.setApplicationMenu(null);
     appWindow.loadURL(`file://${__dirname}/src/timer.html`);
 });
 
