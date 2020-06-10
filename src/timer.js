@@ -82,6 +82,7 @@ var roundCount = 0;
 var breakRounds = 2;
 var isWorking = true;
 work.startTimer();
+startTime = Date.now();
 
 function switchTimers(){
     //open model after work sess completed

@@ -9,6 +9,7 @@ var sBtn = document.getElementById("submit");
 var stars = document.getElementsByClassName("star");
 
 var currStar = 0;
+var startTime = 0;
 window.onclick = function (event) {
     //close the modal if we click outside of its content
     if (event.target == modal) {
@@ -19,14 +20,9 @@ window.onclick = function (event) {
         var x = parseInt(event.target.innerHTML);
         if(x !== NaN){
             //first clear all borders
-            for(var i=4 ; i >= 0; i--){
-                stars[i].style.borderBottom = "none";
-            }
+            clearStarBorders();
             //check if we are trying to deselect
-            if(currStar == x){
-                currStar = 0;
-            }//apply underline the border for each star below it
-            else{
+            if(currStar != x){
                 currStar = x;
                 x-=1;
                 for(; x >= 0; x--){
@@ -42,9 +38,27 @@ sBtn.onclick = function (event) {
     modal.style.display = "none";
 
     //submit data
-
+    var input = document.getElementById("reflection");
+    var data = {
+        'stars': currStar,
+        'reflection': input.value,
+        'time_since_start': Date.now()-startTime
+    };
+    ipcRenderer.send("check-in", data);
+    
     //reset the modal
     //  clear the stars
+    clearStarBorders();
     //  clear the text area
+    document.getElementById("reflection").value = "";
+
     //display toast?
+}
+
+
+function clearStarBorders(){
+    for(var i=4 ; i >= 0; i--){
+        stars[i].style.borderBottom = "none";
+    }
+    currStar = 0;
 }
