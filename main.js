@@ -3,8 +3,8 @@ const fs = require("fs");
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 var appWindow;
 
-var file = fs.readFileSync("checkins.txt");
-
+var file = fs.readFileSync("checkins.json");
+var checkins = JSON.parse(file);
 app.on("ready", function(){
     appWindow = new BrowserWindow({
         webPreferences:{
@@ -19,13 +19,8 @@ app.on("ready", function(){
 });
 
 
-
-app.on("quit", function(){
-    fs.writeFileSync("checkins.json", file);
-});
-
 ipcMain.on("check-in", function(e, data){
     console.log(data);
-    file += data;
-    file += "\n\n";
+    checkins.push(data);
+    fs.writeFileSync("checkins.json", JSON.stringify(checkins));
 });
